@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float enimiesPerSecond = 0.5f;
     [SerializeField] private float timeBetweenWaves = 5f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
+    [SerializeField] private int maxWaves = 3; // 총 3 웨이브
 
     [Header("Events")]
     public static UnityEvent onEnemyDestroy = new UnityEvent();
@@ -55,6 +56,12 @@ public class EnemySpawner : MonoBehaviour
     private void EnemyDestroyed()
     {
         enemiesAlive--;
+        
+        // 적이 목표지점에 도달했을 때 플레이어에게 데미지 1 입힘
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.TakeDamage(1);
+        }
     }
     private IEnumerator StartWave()
     {
@@ -69,7 +76,20 @@ public class EnemySpawner : MonoBehaviour
         isSpawning = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
-        StartCoroutine(StartWave());
+        
+        // 모든 웨이브를 클리어했는지 확인
+        if (currentWave > maxWaves)
+        {
+            // 게임 클리어!
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.Victory();
+            }
+        }
+        else
+        {
+            StartCoroutine(StartWave());
+        }
     }
     private void SpawnEnemy()
     {
