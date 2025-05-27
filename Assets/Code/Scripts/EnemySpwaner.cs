@@ -56,12 +56,8 @@ public class EnemySpawner : MonoBehaviour
     private void EnemyDestroyed()
     {
         enemiesAlive--;
-        
-        // 적이 목표지점에 도달했을 때 플레이어에게 데미지 1 입힘
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.TakeDamage(1);
-        }
+        // 적이 제거되었을 때만 카운트 감소
+        // 데미지는 EnemyMovement에서 처리
     }
     private IEnumerator StartWave()
     {

@@ -31,6 +31,12 @@ public class EnemyMovement : MonoBehaviour
 
             if (pathIndex >= LevelManager.main.path.Length)
             {
+                // 목표 도달시 플레이어에게 데미지
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.TakeDamage(1);
+                }
+                
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject);
                 return;

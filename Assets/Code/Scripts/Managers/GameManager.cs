@@ -38,11 +38,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // 싱글톤 설정
+        // 싱글톤 설정 - DontDestroyOnLoad 제거하여 씬 재로드시 새로 생성
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -170,5 +169,11 @@ public class GameManager : MonoBehaviour
     public int GetMaxHealth()
     {
         return maxPlayerHealth;
+    }
+    
+    // 현재 게임 상태 반환
+    public GameState GetCurrentState()
+    {
+        return currentState;
     }
 }
