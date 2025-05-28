@@ -31,6 +31,19 @@ public class EnemyMovement : MonoBehaviour
 
             if (pathIndex >= LevelManager.main.path.Length)
             {
+                // 중복 처리 방지
+                Enemy enemyComponent = GetComponent<Enemy>();
+                if (enemyComponent != null)
+                {
+                    if (enemyComponent.IsDestroyed)
+                    {
+                        return; // 이미 파괴 처리 중이므로 리턴
+                    }
+                    
+                    // 파괴 플래그 설정
+                    enemyComponent.MarkAsDestroyed();
+                }
+                
                 // 목표 도달시 플레이어에게 데미지
                 if (GameManager.Instance != null)
                 {

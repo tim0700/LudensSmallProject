@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
     [Header("Stats")]
     public int maxHealth = 10;
     public float moveSpeed = 2f;
-    public int dropCurrency = 10; // ÀûÀÌ »ç¸ÁÇÒ ¶§ µå¶øÇÏ´Â ÀçÈ­ ¾ç
+    public int dropCurrency = 10; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½È­ ï¿½ï¿½
 
     private int currentHealth;
 
@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = maxHealth;
 
-        // ÀÌµ¿ ¼Óµµ¸¦ EnemyMovement ½ºÅ©¸³Æ®·Î Àü´Ş
+        // ï¿½Ìµï¿½ ï¿½Óµï¿½ï¿½ï¿½ EnemyMovement ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         GetComponent<EnemyMovement>().SetSpeed(moveSpeed);
     }
 
@@ -27,22 +27,34 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private bool isDestroyed = false; // Áßº¹ ÆÄ±« ¹æÁö ÇÃ·¡±×
+    private bool isDestroyed = false; // ì¤‘ë³µ íŒŒê´´ ë°©ì§€ í”Œë˜ê·¸
+    
+    // ì™¸ë¶€ì—ì„œ ì ‘ê·¼ ê°€ëŠ¥í•œ í”„ë¡œí¼í‹°
+    public bool IsDestroyed => isDestroyed;
+    
+    // ì™¸ë¶€ì—ì„œ íŒŒê´´ í”Œë˜ê·¸ë¥¼ ì„¤ì •í•  ìˆ˜ ìˆëŠ” ë©”ì„œë“œ
+    public void MarkAsDestroyed()
+    {
+        isDestroyed = true;
+    }
 
     private void Die()
     {
-
-        if (isDestroyed) return; // ÀÌ¹Ì ÆÄ±«µÈ °æ¿ì Áßº¹ ÆÄ±« ¹æÁö, ¹ö±× »ı±æ¼öµµ ÀÖÀ½.
-
-
-        EnemySpawner.onEnemyDestroy.Invoke(); // ¿şÀÌºê Ä«¿îÆ® °¨¼Ò
-        isDestroyed = true; // Áßº¹ ÆÄ±« ¹æÁö ÇÃ·¡±× ¼³Á¤
-        Destroy(gameObject); // °ÔÀÓ¿¡¼­ Á¦°Å
-
-        // »ç¸Á½Ã ÀçÈ­ Ãß°¡
-        LevelManager.main.IncreaseCurrency(dropCurrency); // ¿¹½Ã·Î dropCurrency ÀçÈ­ Ãß°¡, Àû Á¾·ù¸¶´Ù ´Ù¸£°Ô ÇØÁà¾ßÇÔ
-
-
+        if (isDestroyed) return; // ì´ë¯¸ íŒŒê´´ëœ ê²½ìš° ì¤‘ë³µ íŒŒê´´ ë°©ì§€
+        
+        isDestroyed = true; // ì¤‘ë³µ íŒŒê´´ ë°©ì§€ í”Œë˜ê·¸ ì„¤ì •
+        
+        // í™”í ë“œë¡­ (íŒŒê´´ë˜ê¸° ì „ì— ì²˜ë¦¬)
+        if (LevelManager.main != null)
+        {
+            LevelManager.main.IncreaseCurrency(dropCurrency);
+        }
+        
+        // ì  íŒŒê´´ ì´ë²¤íŠ¸ ë°œìƒ
+        EnemySpawner.onEnemyDestroy.Invoke();
+        
+        // ê²Œì„ ì˜¤ë¸Œì íŠ¸ ì œê±°
+        Destroy(gameObject);
     }
 }
 
