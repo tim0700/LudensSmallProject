@@ -56,5 +56,6 @@ public class Enemy : MonoBehaviour
         // 게임 오브젝트 제거
         Destroy(gameObject);
     }
+   
 }
 
