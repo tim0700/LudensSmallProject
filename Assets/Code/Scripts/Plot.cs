@@ -41,11 +41,6 @@ public class Plot : MonoBehaviour
         sr.color = startColor;  // 원래 색상으로 복구
     }
 
-    /* === 타워 설치 기능 (현재 미구현) ===
-     * 아래 코드는 나중에 타워 시스템이 완성되면 활성화할 예정입니다.
-     * 마치 "토지에 건물을 짓는" 기능과 같습니다.
-     */
-    /*
     private void OnMouseDown()
     {
         // 이미 타워가 있다면 새로 짓지 않음 (중복 건설 방지)
@@ -65,5 +60,4 @@ public class Plot : MonoBehaviour
         // 선택된 타워를 이 위치에 생성 (건설 실행)
         tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
     }
-    */
 }

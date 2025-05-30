@@ -12,10 +12,6 @@ public class BuildManager : MonoBehaviour
 
     private int selectedTower = 0;
 
-
-
-
-
     private void Awake()
     {
         main = this;
@@ -29,6 +25,7 @@ public class BuildManager : MonoBehaviour
     public void SetSelectedTower(int _selectedTower)
     {
         selectedTower = _selectedTower;
+        Debug.Log("Selected Tower: " + towers[selectedTower].name);
     }
 
 }
