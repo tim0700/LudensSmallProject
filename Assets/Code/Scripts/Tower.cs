@@ -5,9 +5,9 @@ using UnityEngine;
 [Serializable]
 public class Tower
 {
-    public string name; // Å¸¿ö ÀÌ¸§
-    public int cost; // Å¸¿ö ±¸¸Å ºñ¿ë
-    public GameObject prefab; // Å¸¿ö ÇÁ¸®ÆÕ
+    public string name; // Å¸ï¿½ï¿½ ï¿½Ì¸ï¿½
+    public int cost; // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    public GameObject prefab; // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     public Tower (string _name, int _cost, GameObject _prefab)
     {
@@ -16,7 +16,12 @@ public class Tower
         this.prefab = _prefab;
     }
 
-
-
-
+    /// <summary>
+    /// íƒ€ì›Œ íŒë§¤ì‹œ í™˜ë¶ˆë°›ì„ ê¸ˆì•¡ì„ ê³„ì‚°í•©ë‹ˆë‹¤ (ì›ê°€ì˜ 80%)
+    /// </summary>
+    /// <returns>í™˜ë¶ˆ ê¸ˆì•¡</returns>
+    public int GetSellPrice()
+    {
+        return Mathf.RoundToInt(cost * 0.8f);
+    }
 }

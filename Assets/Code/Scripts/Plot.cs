@@ -1,63 +1,144 @@
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö µðÆæ½º °ÔÀÓÀÇ Å¸¿ö ¼³Ä¡ ±¸¿ªÀ» °ü¸®ÇÏ´Â Å¬·¡½º
-/// ¸¶Ä¡ "°Ç¼³ °¡´ÉÇÑ ÅäÁö"Ã³·³ µ¿ÀÛÇÏ¸ç, ÇÃ·¹ÀÌ¾î°¡ ¸¶¿ì½º¸¦ ¿Ã¸®¸é ½Ã°¢Àû ÇÇµå¹éÀ» Á¦°øÇÕ´Ï´Ù.
+/// Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½æ½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
+/// ï¿½ï¿½Ä¡ "ï¿½Ç¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Çµï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 /// </summary>
 public class Plot : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private SpriteRenderer sr;        // ±¸¿ªÀ» Ç¥½ÃÇÏ´Â ½ºÇÁ¶óÀÌÆ® ·»´õ·¯ (¶¥ÀÇ ¸ð¾çÀ» ±×¸®´Â º×)
-    [SerializeField] private Color hoverColor;         // ¸¶¿ì½º¸¦ ¿Ã·ÈÀ» ¶§ Ç¥½ÃÇÒ »ö»ó (ÇÏÀÌ¶óÀÌÆ® »ö»ó)
+    [SerializeField] private SpriteRenderer sr;        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½)
+    [SerializeField] private Color hoverColor;         // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½)
+    [SerializeField] private Color sellHoverColor = Color.red;    // íŒë§¤ ëª¨ë“œì—ì„œ í˜¸ë²„ ì‹œ ìƒ‰ìƒ
 
-    // === ÇÁ¶óÀÌºø º¯¼öµé ===
-    private GameObject tower;       // ÀÌ ±¸¿ª¿¡ ¼³Ä¡µÈ Å¸¿ö (ÇöÀç´Â »ç¿ëµÇÁö ¾ÊÀ½)
-    private Color startColor;       // ¿ø·¡ »ö»óÀ» ±â¾ïÇÏ´Â º¯¼ö (±âº» »óÅÂ·Î µ¹¾Æ°¡±â À§ÇØ)
+    // === ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ===
+    private GameObject tower;       // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Å¸ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+    private Color startColor;       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½âº» ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
     /// <summary>
-    /// °ÔÀÓ ½ÃÀÛ ½Ã ÃÊ±â ¼³Á¤
-    /// ¸¶Ä¡ "ÅäÁöÀÇ ¿ø·¡ »ö±òÀ» »çÁøÀ¸·Î Âï¾îµÎ´Â" °Í°ú °°½À´Ï´Ù.
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½
+    /// ï¿½ï¿½Ä¡ "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î´ï¿½" ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
     /// </summary>
     private void Start()
     {
-        startColor = sr.color;  // ÇöÀç »ö»óÀ» ±âº» »ö»óÀ¸·Î ÀúÀå
+        startColor = sr.color;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
-
     /// <summary>
-    /// ¸¶¿ì½º°¡ ÀÌ ±¸¿ª À§¿¡ ¿Ã¶ó¿ÔÀ» ¶§ È£Ãâ
-    /// ¸¶Ä¡ "ÅäÁö À§¿¡ µ¸º¸±â¸¦ ¿Ã·Á¼­ °­Á¶ÇÏ´Â" È¿°ú¸¦ ÁÝ´Ï´Ù.
+    /// ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½
+    /// ï¿½ï¿½Ä¡ "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½â¸¦ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½" È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ý´Ï´ï¿½.
     /// </summary>
     private void OnMouseEnter()
     {
-        sr.color = hoverColor;  // ÇÏÀÌ¶óÀÌÆ® »ö»óÀ¸·Î º¯°æÇÏ¿© "¼±ÅÃ °¡´É"ÀÓÀ» Ç¥½Ã
+        // íŒë§¤ ëª¨ë“œì¼ ë•ŒëŠ” íƒ€ì›Œê°€ ìžˆëŠ” ê³³ì—ì„œë§Œ í•˜ì´ë¼ì´íŠ¸
+        if (BuildManager.main.IsSellMode())
+        {
+            if (tower != null)
+            {
+                sr.color = sellHoverColor;  // íŒë§¤ ì „ìš© í•˜ì´ë¼ì´íŠ¸ ìƒ‰ìƒ
+            }
+        }
+        else
+        {
+            // ì¼ë°˜ ëª¨ë“œì—ì„œëŠ” ë¹„ì–´ìžˆëŠ” ê³³ì—ì„œë§Œ í•˜ì´ë¼ì´íŠ¸
+            if (tower == null)
+            {
+                sr.color = hoverColor;  // ì¼ë°˜ í•˜ì´ë¼ì´íŠ¸ ìƒ‰ìƒ
+            }
+        }
     }
 
     /// <summary>
-    /// ¸¶¿ì½º°¡ ÀÌ ±¸¿ªÀ» ¹þ¾î³µÀ» ¶§ È£Ãâ
-    /// ¸¶Ä¡ "µ¸º¸±â¸¦ Ä¡¿ö¼­ ¿ø·¡ »óÅÂ·Î µÇµ¹¸®´Â" °Í°ú °°½À´Ï´Ù.
+    /// ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î³µï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½
+    /// ï¿½ï¿½Ä¡ "ï¿½ï¿½ï¿½ï¿½ï¿½â¸¦ Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½" ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
     /// </summary>
     private void OnMouseExit()
     {
-        sr.color = startColor;  // ¿ø·¡ »ö»óÀ¸·Î º¹±¸
+        sr.color = startColor;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     private void OnMouseDown()
     {
-        // ÀÌ¹Ì Å¸¿ö°¡ ÀÖ´Ù¸é »õ·Î ÁþÁö ¾ÊÀ½ (Áßº¹ °Ç¼³ ¹æÁö)
+        // íŒë§¤ ëª¨ë“œì¼ ë•Œì˜ ì²˜ë¦¬
+        if (BuildManager.main.IsSellMode())
+        {
+            SellTower();
+            return;
+        }
+
+        // ì¼ë°˜ ëª¨ë“œ: íƒ€ì›Œ ê±´ì„¤
+        BuildTower();
+    }
+
+    /// <summary>
+    /// íƒ€ì›Œë¥¼ ê±´ì„¤í•˜ëŠ” ë©”ì„œë“œ
+    /// </summary>
+    private void BuildTower()
+    {
+        // ì´ë¯¸ íƒ€ì›Œê°€ ìžˆë‹¤ë©´ ê±´ì„¤ ë¶ˆê°€ (ì¤‘ë³µ ê±´ì„¤ ë°©ì§€)
         if (tower != null) return;
 
-        // BuildManager¿¡¼­ ÇöÀç ¼±ÅÃµÈ Å¸¿ö Á¤º¸¸¦ °¡Á®¿È
+        // BuildManagerì—ì„œ í˜„ìž¬ ì„ íƒëœ íƒ€ì›Œ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ê¸°
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
         
         if (towerToBuild.cost > LevelManager.main.currency)
         {
             Debug.Log("You can't afford this tower");
-            return; // Å¸¿ö°¡ ¼±ÅÃµÇÁö ¾ÊÀº °æ¿ì ¾Æ¹« °Íµµ ÇÏÁö ¾ÊÀ½
+            return; // íƒ€ì›Œë¥¼ ì‚´ ëˆì´ ì—†ëŠ” ê²½ìš° ì•„ë¬´ ê²ƒë„ í•˜ì§€ ì•ŠìŒ
         }
 
-        LevelManager.main.SpendCurrency(towerToBuild.cost); // Å¸¿ö °Ç¼³ ºñ¿ë Â÷°¨
+        LevelManager.main.SpendCurrency(towerToBuild.cost); // íƒ€ì›Œ ê±´ì„¤ ë¹„ìš© ì§€ë¶ˆ
 
-        // ¼±ÅÃµÈ Å¸¿ö¸¦ ÀÌ À§Ä¡¿¡ »ý¼º (°Ç¼³ ½ÇÇà)
+        // ì„ íƒëœ íƒ€ì›Œë¥¼ ì´ ìœ„ì¹˜ì— ìƒì„± (ê±´ì„¤ ì™„ë£Œ)
         tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// íƒ€ì›Œë¥¼ íŒë§¤í•˜ëŠ” ë©”ì„œë“œ
+    /// </summary>
+    private void SellTower()
+    {
+        // íƒ€ì›Œê°€ ì—†ë‹¤ë©´ íŒë§¤í•  ê²ƒì´ ì—†ìŒ
+        if (tower == null)
+        {
+            Debug.Log("íŒë§¤í•  íƒ€ì›Œê°€ ì—†ìŠµë‹ˆë‹¤.");
+            return;
+        }
+
+        // íƒ€ì›Œ ì˜µì ë§¤ì—ì„œ íƒ€ì›Œ ì •ë³´ ì°¾ê¸° (íƒ€ì›Œ ë¹„ìš© ê³„ì‚°ì„ ìœ„í•´)
+        Tower towerInfo = GetTowerInfoFromPrefab(tower);
+        
+        if (towerInfo != null)
+        {
+            int sellPrice = towerInfo.GetSellPrice();
+            LevelManager.main.IncreaseCurrency(sellPrice); // í™˜ë¶ˆ ê¸ˆì•¡ ì§€ê¸‰
+            Debug.Log($"íƒ€ì›Œ íŒë§¤! {sellPrice}ì› í™˜ë¶ˆë°›ì•˜ìŠµë‹ˆë‹¤.");
+        }
+
+        // íƒ€ì›Œ ê²Œìž„ì˜¤ë¸Œì íŠ¸ ì œê±°
+        Destroy(tower);
+        tower = null;
+    }
+
+    /// <summary>
+    /// íƒ€ì›Œ í”„ë¦¬íŒ©ìœ¼ë¡œë¶€í„° íƒ€ì›Œ ì •ë³´ë¥¼ ì°¾ëŠ” ë©”ì„œë“œ
+    /// </summary>
+    /// <param name="towerGameObject">ì°¾ì„ íƒ€ì›Œ ê²Œìž„ì˜¤ë¸Œì íŠ¸</param>
+    /// <returns>ë§¤ì¹­ë˜ëŠ” íƒ€ì›Œ ì •ë³´</returns>
+    private Tower GetTowerInfoFromPrefab(GameObject towerGameObject)
+    {
+        // BuildManagerì˜ íƒ€ì›Œ ë¦¬ìŠ¤íŠ¸ì—ì„œ ë§¤ì¹­ë˜ëŠ” íƒ€ì›Œ ì°¾ê¸°
+        Tower[] towers = BuildManager.main.GetAllTowers();
+        
+        foreach (Tower tower in towers)
+        {
+            // í”„ë¦¬íŒ© ì´ë¦„ìœ¼ë¡œ ë¹„êµ (ì¸ìŠ¤í„´ìŠ¤ëŠ” ì´ë¦„ ë’¤ì— (Clone)ì´ ë¶™ìŒ)
+            if (towerGameObject.name.Contains(tower.prefab.name))
+            {
+                return tower;
+            }
+        }
+        
+        Debug.LogWarning("íƒ€ì›Œ ì •ë³´ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: " + towerGameObject.name);
+        return null;
     }
 }
